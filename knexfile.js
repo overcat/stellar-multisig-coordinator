@@ -8,6 +8,7 @@ module.exports = {
         client: 'postgresql',
         connection: {
             host: 'localhost',
+            port: '5432',
             database: 'coordinator',
             user: 'postgres',
             password: 'password'
@@ -19,6 +20,8 @@ module.exports = {
     production: {
         client: 'postgresql',
         connection: {
+            host: 'localhost',
+            port: '5432',
             database: 'coordinator',
             user: 'postgres',
             password: 'password'

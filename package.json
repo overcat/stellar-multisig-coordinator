@@ -4,9 +4,10 @@
   "description": "Coordinate between several parties to generate a transaction for an Stellar account protected by multisig.",
   "main": "src/server.js",
   "scripts": {
+    "start": "node src/server.js",
     "test": "./node_modules/.bin/mocha --timeout 10000 test/*",
     "dev": "./node_modules/.bin/nodemon src/server.js",
-    "migrate": "./node_modules/.bin/knex migrate:latest"
+    "migrate": "./node_modules/.bin/knex migrate:latest --env production"
   },
   "repository": {
     "type": "git",
