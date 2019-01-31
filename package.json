@@ -1,0 +1,43 @@
+{
+  "name": "stellar-multisig-coordinator",
+  "version": "0.0.1",
+  "description": "Coordinate between several parties to generate a transaction for an Stellar account protected by multisig.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --timeout 10000 test/*",
+    "dev": "./node_modules/.bin/nodemon src/server.js",
+    "migrate": "./node_modules/.bin/knex migrate:latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/overcat/stellar-multisig-coordinator.git"
+  },
+  "keywords": [
+    "stellar",
+    "lumens",
+    "multisig",
+    "blockchain",
+    "security"
+  ],
+  "author": "overcat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/overcat/stellar-multisig-coordinator/issues"
+  },
+  "homepage": "https://github.com/overcat/stellar-multisig-coordinator#readme",
+  "dependencies": {
+    "knex": "^0.16.3",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "pg": "^7.8.0",
+    "qs": "^6.6.0",
+    "stellar-sdk": "^0.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9"
+  }
+}

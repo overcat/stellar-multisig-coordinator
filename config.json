@@ -1,0 +1,6 @@
+{
+  "network_passphrase": "Test SDF Network ; September 2015",
+  "horizon_url": "https://horizon-testnet.stellar.org",
+  "service_url": "http://127.0.0.1:3000",
+  "email": "4catcode@gmail.com"
+}
