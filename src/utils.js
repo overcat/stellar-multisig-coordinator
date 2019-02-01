@@ -20,7 +20,7 @@ const parseNewXDR = async xdr => {
         accountData = await server.loadAccount(tx.source);
     } catch (e) {
         if (e.response.type === 'https://stellar.org/horizon-errors/not_found') {
-            throw new AppError(400, "not_found", "Couldn't find your account on the network.")
+            throw new AppError(400, "account_not_found", "Couldn't find your account on the network.")
         } else {
             throw new AppError(500, "unknown", "We can not load source account right now.")
         }
@@ -69,7 +69,7 @@ const parseNewXDR = async xdr => {
             const signatureHint = keyPair.signatureHint().toString('hex');
             const signed = txSignatures.find(x => x.hint === signatureHint);
             if (signed) {
-                if (txSignatures.length !== 0 && signedWeight >= threshold) {
+                if (txSignatures.length !== 0 && signedWeight >= threshold && signedWeight !== 0) {
                     throw new AppError(400, 'bad_auth_extra', 'Unused signatures attached to transaction.')
                 }
                 txSignatures = txSignatures.filter(x => x.hint !== signatureHint);
@@ -85,6 +85,9 @@ const parseNewXDR = async xdr => {
                 'signed': !!signed
             })
         }
+    }
+    if (signedWeight >= threshold) {
+        throw new AppError(400, 'submitted_through_horizon', 'This transaction has been granted sufficient permissions, so it should be submitted through horizon.')
     }
     if (txSignatures.length !== 0) {
         throw new AppError(400, 'bad_auth_exclude', 'Signature not in the signers')

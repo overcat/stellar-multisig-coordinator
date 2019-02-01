@@ -27,9 +27,6 @@ router.post('/transactions', async ctx => {
     const xdr = ctx.request.body.tx;
     const txId = crypto.randomBytes(32).toString('hex');
     const {threshold, signedWeight, signers} = await parseNewXDR(xdr);
-    if (signedWeight >= threshold) {
-        throw new AppError(400, 'submitted_through_horizon', 'This transaction has been granted sufficient permissions, so it should be submitted through horizon.')
-    }
     const txRecord = await createNewTransaction(txId, xdr, signers, threshold, signedWeight);
     return ctx.body = responseJSON(txRecord)
 });

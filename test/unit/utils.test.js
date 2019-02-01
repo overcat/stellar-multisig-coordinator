@@ -8,6 +8,7 @@ describe('parseNewXDR', () => {
         const data = await utils.parseNewXDR(xdr);
         const expect = {
             threshold: 1,
+            signedWeight: 0,
             signers: [
                 {
                     public_key: 'GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ',
@@ -35,6 +36,7 @@ describe('parseNewXDR', () => {
         const data = await utils.parseNewXDR(xdr);
         const expect = {
             threshold: 2,
+            signedWeight: 0,
             signers: [
                 {
                     public_key: 'GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ',
@@ -62,6 +64,7 @@ describe('parseNewXDR', () => {
         const data = await utils.parseNewXDR(xdr);
         const expect = {
             threshold: 3,
+            signedWeight: 0,
             signers: [
                 {
                     public_key: 'GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ',
@@ -89,7 +92,7 @@ describe('parseNewXDR', () => {
         try {
             await utils.parseNewXDR(xdr);
         } catch (e) {
-            e.code.should.eql('not_found');
+            e.code.should.eql('account_not_found');
             e.status.should.eql(400);
         }
     });
