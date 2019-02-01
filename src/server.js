@@ -1,7 +1,7 @@
 const Koa = require("koa");
 const Router = require("koa-router");
 const bodyParser = require('koa-bodyparser');
-const Logger = require('koa-logger')
+const Logger = require('koa-logger');
 const email = require('../config').email;
 const AppError = require('./errors');
 
@@ -31,7 +31,7 @@ app.use(errorHandler);
 
 app.use(async (ctx, next) => {
     if (ctx.req.method === 'POST' && ctx.req.headers['content-type'] !== 'application/x-www-form-urlencoded') {
-        ctx.throw(new AppError('415', 'unsupported_media_type', 'The request has an unsupported content type. Presently, the only supported content type is application/x-www-form-urlencoded.'));
+        ctx.throw(new AppError(415, 'unsupported_media_type', 'The request has an unsupported content type. Presently, the only supported content type is application/x-www-form-urlencoded.'));
     }
     await next();
 });
@@ -53,7 +53,7 @@ app.use(router.routes())
 
 
 const server = app.listen(PORT, () => {
-    console.log(`Server listening on: http://localhost:${PORT}`);
+    console.log(`[${process.env.NODE_ENV}] Server listening on: http://localhost:${PORT}`);
 });
 
 module.exports = server;
