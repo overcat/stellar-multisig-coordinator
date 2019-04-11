@@ -22,9 +22,9 @@ Request:
 
 ```bash
 curl -X POST \
-  https://multisig.tools/transaction \
+  https://multisig.tools/transactions \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d 'tx=AAAAAC%2BnCCvMAo6laPFj7JNR6FMM7HY%2FsoU0kqUfxVvVp0c0AAAAZAAd7gwAAAAKAAAAAAAAAAAAAAABAAAAAAAAAAoAAAAFaGVsbG8AAAAAAAABAAAAB3N0ZWxsYXIAAAAAAAAAAAHVp0c0AAAAQCyIFULmKSU9zGXeuwKmlAGFNY8q2MMOgtKUACh4Eu%2FZQrk6%2B3Q%2BTw7SbE54hqDDjE7Uz3tI8PXo8%2FU8pgfASw8%3D&undefined='
+  -d 'tx=AAAAAC%2BnCCvMAo6laPFj7JNR6FMM7HY%2FsoU0kqUfxVvVp0c0AAAAZAAd7gwAAAAKAAAAAAAAAAAAAAABAAAAAAAAAAoAAAAFaGVsbG8AAAAAAAABAAAAB3N0ZWxsYXIAAAAAAAAAAAHVp0c0AAAAQCyIFULmKSU9zGXeuwKmlAGFNY8q2MMOgtKUACh4Eu%2FZQrk6%2B3Q%2BTw7SbE54hqDDjE7Uz3tI8PXo8%2FU8pgfASw8%3D'
 ```
 
 Response:
@@ -38,17 +38,17 @@ Response:
     "request_uri": "web+stellar:tx?callback=url%3Ahttps%3A%2F%2Fmultisig.tools%2Ftransaction%2Fa0305379ab064b3ac826045e21ffb87f4989e3bfb766dfc869e67323c9c43779&network_passphrase=Test%20SDF%20Network%20%3B%20September%202015&xdr=AAAAAC%2BnCCvMAo6laPFj7JNR6FMM7HY%2FsoU0kqUfxVvVp0c0AAAAZAAd7gwAAAAKAAAAAAAAAAAAAAABAAAAAAAAAAoAAAAFaGVsbG8AAAAAAAABAAAAB3N0ZWxsYXIAAAAAAAAAAAHVp0c0AAAAQCyIFULmKSU9zGXeuwKmlAGFNY8q2MMOgtKUACh4Eu%2FZQrk6%2B3Q%2BTw7SbE54hqDDjE7Uz3tI8PXo8%2FU8pgfASw8%3D",
     "signers": [
         {
-            "public_key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
+            "key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
             "signed": false,
             "weight": 1
         },
         {
-            "public_key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
+            "key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
             "signed": false,
             "weight": 1
         },
         {
-            "public_key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
+            "key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
             "signed": true,
             "weight": 1
         }
@@ -76,17 +76,17 @@ Response:
     "request_uri": "web+stellar:tx?callback=url%3Ahttps%3A%2F%2Fmultisig.tools%2Ftransaction%2Fa0305379ab064b3ac826045e21ffb87f4989e3bfb766dfc869e67323c9c43779&network_passphrase=Test%20SDF%20Network%20%3B%20September%202015&xdr=AAAAAC%2BnCCvMAo6laPFj7JNR6FMM7HY%2FsoU0kqUfxVvVp0c0AAAAZAAd7gwAAAAKAAAAAAAAAAAAAAABAAAAAAAAAAoAAAAFaGVsbG8AAAAAAAABAAAAB3N0ZWxsYXIAAAAAAAAAAAHVp0c0AAAAQCyIFULmKSU9zGXeuwKmlAGFNY8q2MMOgtKUACh4Eu%2FZQrk6%2B3Q%2BTw7SbE54hqDDjE7Uz3tI8PXo8%2FU8pgfASw8%3D",
     "signers": [
         {
-            "public_key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
+            "key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
             "signed": false,
             "weight": 1
         },
         {
-            "public_key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
+            "key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
             "signed": false,
             "weight": 1
         },
         {
-            "public_key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
+            "key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
             "signed": true,
             "weight": 1
         }
@@ -119,17 +119,17 @@ Response:
     "request_uri": "web+stellar:tx?callback=url%3Ahttps%3A%2F%2Fmultisig.tools%2Ftransaction%2Fa0305379ab064b3ac826045e21ffb87f4989e3bfb766dfc869e67323c9c43779&network_passphrase=Test%20SDF%20Network%20%3B%20September%202015&xdr=AAAAAC%2BnCCvMAo6laPFj7JNR6FMM7HY%2FsoU0kqUfxVvVp0c0AAAAZAAd7gwAAAAKAAAAAAAAAAAAAAABAAAAAAAAAAoAAAAFaGVsbG8AAAAAAAABAAAAB3N0ZWxsYXIAAAAAAAAAAALVp0c0AAAAQCyIFULmKSU9zGXeuwKmlAGFNY8q2MMOgtKUACh4Eu%2FZQrk6%2B3Q%2BTw7SbE54hqDDjE7Uz3tI8PXo8%2FU8pgfASw%2FQGwk4AAAAQD1PanqLpBmL2sXwKaq7RfBiFs4c97sxN3vB9KEspyKGAhroh%2BhUxVm6QmlwtDT%2BvhbXj%2BCiNtyMKXgpWvSxEQw%3D",
     "signers": [
         {
-            "public_key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
+            "key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
             "signed": false,
             "weight": 1
         },
         {
-            "public_key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
+            "key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
             "signed": true,
             "weight": 1
         },
         {
-            "public_key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
+            "key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
             "signed": true,
             "weight": 1
         }
@@ -172,17 +172,17 @@ Response:
         "request_uri": "web+stellar:tx?callback=url%3Ahttps%3A%2F%2Fmultisig.tools%2Ftransaction%2Fa0305379ab064b3ac826045e21ffb87f4989e3bfb766dfc869e67323c9c43779&network_passphrase=Test%20SDF%20Network%20%3B%20September%202015&xdr=AAAAAC%2BnCCvMAo6laPFj7JNR6FMM7HY%2FsoU0kqUfxVvVp0c0AAAAZAAd7gwAAAAKAAAAAAAAAAAAAAABAAAAAAAAAAoAAAAFaGVsbG8AAAAAAAABAAAAB3N0ZWxsYXIAAAAAAAAAAALVp0c0AAAAQCyIFULmKSU9zGXeuwKmlAGFNY8q2MMOgtKUACh4Eu%2FZQrk6%2B3Q%2BTw7SbE54hqDDjE7Uz3tI8PXo8%2FU8pgfASw%2FQGwk4AAAAQD1PanqLpBmL2sXwKaq7RfBiFs4c97sxN3vB9KEspyKGAhroh%2BhUxVm6QmlwtDT%2BvhbXj%2BCiNtyMKXgpWvSxEQw%3D",
         "signers": [
             {
-                "public_key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
+                "key": "GCLNX7YGVTP64NQ3YWDWZDHUPQ64JMADKJPK7MX3DWO3YBS3E5HNEZXJ",
                 "signed": false,
                 "weight": 1
             },
             {
-                "public_key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
+                "key": "GAIKYFQ7UN7E4I4ODK5IDNVSX5A3SGYZILDPJNUUIMWEI2OQDMETQ5XI",
                 "signed": true,
                 "weight": 1
             },
             {
-                "public_key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
+                "key": "GAX2OCBLZQBI5JLI6FR6ZE2R5BJQZ3DWH6ZIKNESUUP4KW6VU5DTI4XL",
                 "signed": true,
                 "weight": 1
             }

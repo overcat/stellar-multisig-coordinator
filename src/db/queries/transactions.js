@@ -11,7 +11,7 @@ const createNewTransaction = (tx_id, xdr, signers, threshold, signed_weight) => 
 const queryTransactionsByPublicKey = (publicKey, limit, offset) => {
     return knex('transactions')
         .select('*')
-        .whereRaw(`signers::jsonb @> '[{"public_key":"${publicKey}"}]'`)
+        .whereRaw(`signers::jsonb @> '[{"key":"${publicKey}"}]'`)
         .orderBy('created_at', 'desc')
         .limit(limit)
         .offset(offset)

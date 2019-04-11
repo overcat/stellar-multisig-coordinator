@@ -87,7 +87,7 @@ const responseJSON = (txRecord) => {
         'request_uri': request_uri,
         'signers': txRecord.signers.map(signer => {
             return {
-                'public_key': signer.public_key,
+                'key': signer.key,
                 'signed': signer.signed,
                 'weight': signer.weight
             }

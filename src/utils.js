@@ -65,7 +65,7 @@ const parseNewXDR = async xdr => {
     let signedWeight = 0;
     for (let signer of accountData.signers) {
         if (signer.type === 'ed25519_public_key' && signer.weight !== 0) {
-            const keyPair = stellarSdk.Keypair.fromPublicKey(signer.public_key);
+            const keyPair = stellarSdk.Keypair.fromPublicKey(signer.key);
             const signatureHint = keyPair.signatureHint().toString('hex');
             const signed = txSignatures.find(x => x.hint === signatureHint);
             if (signed) {
@@ -79,7 +79,7 @@ const parseNewXDR = async xdr => {
                 }
             }
             signers.push({
-                'public_key': signer.public_key,
+                'key': signer.key,
                 'weight': signer.weight,
                 'hint': signatureHint,
                 'signed': !!signed
@@ -134,7 +134,7 @@ const parseUpdateXDR = async (originXDR, newXDR, threshold, signedWeight, signer
             txAddSignatures = txAddSignatures.filter(x => x.hint !== signatureHint);
             signedWeight += signer.weight;
             signer.signed = true;
-            const keyPair = stellarSdk.Keypair.fromPublicKey(signer.public_key);
+            const keyPair = stellarSdk.Keypair.fromPublicKey(signer.key);
             if (!keyPair.verify(originTx.hash(), signed.signature)) {
                 throw new AppError(400, 'signature_malformed', 'malformed signature attached to transaction.')
             }
