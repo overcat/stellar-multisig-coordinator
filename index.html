@@ -25,30 +25,30 @@
                 Alice: {{alice.publicKey()}}<br>
                 Bob: {{bob.publicKey()}}<br>
             </span>
-        <pre v-show="step_0_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
-        <input type="button" :disabled="step!=0 || loading" class="btn btn-primary" value="Submit"
+            <pre v-show="step_0_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
+            <input type="button" :disabled="step!=0 || loading" class="btn btn-primary" value="Submit"
                @click="generateKeyPairs"/>
 
         </p>
         <p>2. Set Alice's account as a multi-sign account and add Bob as a signer.<br>
-        <pre v-show="step_1_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
-        <input type="button" :disabled="step!=1 || loading" class="btn btn-primary" value="Submit"
+            <pre v-show="step_1_resp" v-html="syntaxHighlight(step_1_resp)"></pre>
+            <input type="button" :disabled="step!=1 || loading" class="btn btn-primary" value="Submit"
                @click="setMultisignAccount(alice, bob)"/>
         </p>
 
         <p>3. Alice submits a transaction to the multi-sign server.<br>
-        <pre v-show="step_2_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
-        <input type="button" :disabled="step!=2 || loading" class="btn btn-primary" value="Submit"
+            <pre v-show="step_2_resp" v-html="syntaxHighlight(step_2_resp)"></pre>
+            <input type="button" :disabled="step!=2 || loading" class="btn btn-primary" value="Submit"
                @click="submitTransactionToMultisignServer(alice)"/>
         </p>
         <p>4. Bob gets the previous transaction and signs it.<br>
-        <pre v-show="step_3_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
-        <input type="button" :disabled="step!=3 || loading" class="btn btn-primary" value="Submit"
+            <pre v-show="step_3_resp" v-html="syntaxHighlight(step_3_resp)"></pre>
+            <input type="button" :disabled="step!=3 || loading" class="btn btn-primary" value="Submit"
                @click="submitCosignedTransactionToMultisignServer(bob, id)"/>
         </p>
         <p>5. I want to end the test. (We will send the remaining assets back to friendbot)<br>
-        <pre v-show="step_4_resp" v-html="syntaxHighlight(step_4_resp)"></pre>
-        <input type="button" :disabled="step!=4 || loading" class="btn btn-primary" value="Submit"
+            <pre v-show="step_4_resp" v-html="syntaxHighlight(step_4_resp)"></pre>
+            <input type="button" :disabled="step!=4 || loading" class="btn btn-primary" value="Submit"
                @click="sendAssetsBack(alice, bob, friendbot)"/>
         </p>
         <div v-show="loading" class="lds-dual-ring"></div>
