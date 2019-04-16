@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>multisig.tools example</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.15.0/stellar-sdk.min.js"></script>
+    <link rel="stylesheet" href="css/mobi.min.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
+
+</head>
+<body>
+<div id="app" class="flex-center">
+    <div class="container">
+        <h1><a href="https://github.com/overcat/multisig.tools">multisig.tools</a> example</h1>
+        <small>PUBLIC NET: <a href="https://multisig.tools">https://multisig.tools</a></small>
+        <br>
+        <small>TEST NET: <a href="https://testnet.multisig.tools">https://testnet.multisig.tools</a></small>
+        <p>
+            1. Generate two key pairs and activate Alice's key in the test network.<br>
+            <span v-if="step_0_resp">
+                Alice: {{alice.publicKey()}}<br>
+                Bob: {{bob.publicKey()}}<br>
+            </span>
+        <pre v-show="step_0_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
+        <input type="button" :disabled="step!=0 || loading" class="btn btn-primary" value="Submit"
+               @click="generateKeyPairs"/>
+
+        </p>
+        <p>2. Set Alice's account as a multi-sign account and add Bob as a signer.<br>
+        <pre v-show="step_1_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
+        <input type="button" :disabled="step!=1 || loading" class="btn btn-primary" value="Submit"
+               @click="setMultisignAccount(alice, bob)"/>
+        </p>
+
+        <p>3. Alice submits a transaction to the multi-sign server.<br>
+        <pre v-show="step_2_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
+        <input type="button" :disabled="step!=2 || loading" class="btn btn-primary" value="Submit"
+               @click="submitTransactionToMultisignServer(alice)"/>
+        </p>
+        <p>4. Bob gets the previous transaction and signs it.<br>
+        <pre v-show="step_3_resp" v-html="syntaxHighlight(step_0_resp)"></pre>
+        <input type="button" :disabled="step!=3 || loading" class="btn btn-primary" value="Submit"
+               @click="submitCosignedTransactionToMultisignServer(bob, id)"/>
+        </p>
+        <p>5. I want to end the test. (We will send the remaining assets back to friendbot)<br>
+        <pre v-show="step_4_resp" v-html="syntaxHighlight(step_4_resp)"></pre>
+        <input type="button" :disabled="step!=4 || loading" class="btn btn-primary" value="Submit"
+               @click="sendAssetsBack(alice, bob, friendbot)"/>
+        </p>
+        <div v-show="loading" class="lds-dual-ring"></div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            multiSignServer: "https://testnet.multisig.tools",
+            server: null,
+            alice: null,
+            bob: null,
+            id: null,
+            step_0_resp: null,
+            step_1_resp: null,
+            step_2_resp: null,
+            step_3_resp: null,
+            step_4_resp: null,
+            step: 0,
+            loading: false,
+            friendbot: null
+        },
+        mounted() {
+            this.setNetwork();
+        },
+        methods: {
+            setNetwork: function () {
+                StellarSdk.Network.useTestNetwork();
+                this.server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+            },
+            generateKeyPairs: function () {
+                this.loading = true;
+                this.alice = StellarSdk.Keypair.random();
+                this.bob = StellarSdk.Keypair.random();
+                this.fundAccount(this.alice.publicKey()).then(resp => {
+                    return resp.json()
+                }).then(resp => {
+                    if (!resp.status) {
+                        this.friendbot = (new StellarSdk.Transaction(resp.envelope_xdr)).source;
+                        this.step += 1
+                    }
+                    this.step_0_resp = resp;
+                    this.loading = false;
+                }).catch(err => {
+                    this.loading = false;
+                    console.log(err.message)
+                })
+            },
+            fundAccount: function (accountId) {
+                return fetch(`https://friendbot.stellar.org/?addr=${accountId}`)
+            },
+            setMultisignAccount: function (masterKeypair, signerKeyPair) {
+                this.loading = true;
+                this.server.loadAccount(masterKeypair.publicKey()).then(sourceAccount => {
+                    transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
+                        fee: 200,
+                        timebounds: {minTime: 0, maxTime: Math.floor(Date.now() / 1000) + 60 * 60 * 12}
+                    })
+                        .addOperation(StellarSdk.Operation.setOptions({
+                            masterWeight: 1,
+                            lowThreshold: 2,
+                            medThreshold: 2,
+                            highThreshold: 2,
+                            signer: {
+                                weight: 1,
+                                ed25519PublicKey: signerKeyPair.publicKey(),
+                            }
+                        }))
+                        .build();
+                    transaction.sign(masterKeypair);
+                    this.server.submitTransaction(transaction).then(resp => {
+                        this.loading = false;
+                        this.step_1_resp = resp;
+                        this.step += 1
+                    }).catch(err => {
+                        this.loading = false;
+                        console.log(err)
+                    })
+                })
+            },
+            submitTransactionToMultisignServer: function (masterKeypair) {
+                this.loading = true;
+                this.server.loadAccount(masterKeypair.publicKey()).then(sourceAccount => {
+                    transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
+                        fee: 200,
+                        timebounds: {minTime: 0, maxTime: Math.floor(Date.now() / 1000) + 60 * 60 * 12}
+                    })
+                        .addOperation(StellarSdk.Operation.setOptions({
+                            homeDomain: "hi.com"
+                        }))
+                        .build();
+                    transaction.sign(masterKeypair);
+                    const tx = transaction.toXDR("base64");
+                    this.submitDataToMultiSignServer(`${this.multiSignServer}/transactions`, tx).then(resp => resp.json()).then(resp => {
+                        this.id = resp.id;
+                        this.step_2_resp = resp;
+                        this.step += 1;
+                        this.loading = false;
+                    }).catch(err => {
+                        this.loading = false;
+                        console.log(err)
+                    })
+                })
+            },
+            submitCosignedTransactionToMultisignServer: function (signerKeypair, id) {
+                this.loading = true;
+                const url = `${this.multiSignServer}/transaction/${id}`;
+                fetch(url).then(resp => resp.json()).then(resp => {
+                    const requestURI = resp.request_uri;
+                    const [_, queryString] = requestURI.replace(/^web\+stellar:/, "").split("?", 2);
+                    const urlParams = new URLSearchParams(queryString);
+                    const xdr = urlParams.get("xdr");
+                    const txBuilder = new StellarSdk.Transaction(xdr);
+                    txBuilder.sign(signerKeypair);
+                    const tx = txBuilder.toEnvelope().toXDR('base64');
+                    return this.submitDataToMultiSignServer(url, tx)
+                }).then(resp => resp.json()).then(resp => {
+                    this.step_3_resp = resp;
+                    this.step += 1;
+                    this.loading = false;
+                }).catch(err => {
+                    this.loading = false;
+                    console.log(err)
+                })
+            },
+            submitDataToMultiSignServer: function (url, tx) {
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `tx=${encodeURIComponent(tx)}`
+                })
+            },
+            sendAssetsBack: function (masterKeypair, signerKeypair, destination) {
+                this.loading = true;
+                this.server.loadAccount(masterKeypair.publicKey()).then(sourceAccount => {
+                    transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
+                        fee: 200,
+                        timebounds: {minTime: 0, maxTime: Math.floor(Date.now() / 1000) + 60 * 60 * 12}
+                    })
+                        .addOperation(StellarSdk.Operation.accountMerge({
+                            destination: destination
+                        }))
+                        .build();
+                    transaction.sign(masterKeypair);
+                    transaction.sign(signerKeypair);
+                    this.server.submitTransaction(transaction).then(resp => {
+                        this.step_4_resp = resp;
+                        this.step = 0;
+                        this.loading = false;
+                    }).catch(err => {
+                        this.loading = false;
+                        console.log(err)
+                    })
+                })
+            },
+            syntaxHighlight: function (str) {
+                if (str === null) {
+                    return
+                }
+                json = JSON.stringify(str, undefined, 4);
+                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                    var cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>
