@@ -27,7 +27,7 @@ const parseNewXDR = async xdr => {
     }
 
     for (let operation of tx.operations) {
-        if (operation.source !== accountData.account_id) {
+        if (operation.source !== null && operation.source !== accountData.account_id) {
             throw new AppError(400, 'op_source_diff', 'The source account for the operation should be the same as the source account for the transaction.')
         }
         switch (operation.type) {
