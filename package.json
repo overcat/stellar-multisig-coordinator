@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/overcat/stellar-multisig-coordinator#readme",
   "dependencies": {
-    "knex": "^0.16.5",
+    "knex": "^0.19.4",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.1",
