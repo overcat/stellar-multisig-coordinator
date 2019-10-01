@@ -29,7 +29,7 @@
   "homepage": "https://github.com/overcat/stellar-multisig-coordinator#readme",
   "dependencies": {
     "knex": "^0.16.5",
-    "koa": "^2.7.0",
+    "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.1",
     "koa-router": "^7.4.0",
